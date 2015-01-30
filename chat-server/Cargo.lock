@@ -1,0 +1,4 @@
+[root]
+name = "chat-server"
+version = "0.0.1"
+

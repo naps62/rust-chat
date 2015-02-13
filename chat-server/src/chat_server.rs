@@ -60,6 +60,7 @@ fn manage_connections(receiver: Receiver<Action>) {
     }
 
     fn broadcast(connections:  &mut HashMap<SocketAddr, Connection>, from: &SocketAddr, msg: &[u8]) {
+        println!("broadcasting msg: {}", str::from_utf8(msg).unwrap());
         for (addr, mut connection) in connections.iter_mut() {
             if *from == *addr {
                 continue;

@@ -1,14 +1,13 @@
 use format_strings::{ ANSI_RESET, ANSI_YELLOW, ANSI_GREEN };
-use std::io::net::ip::SocketAddr;
-use std::io::net::tcp::TcpAcceptor;
-use std::io::{ TcpListener, TcpStream, Acceptor, Listener, BufferedStream };
+use std::old_io::net::ip::SocketAddr;
+use std::old_io::net::tcp::TcpAcceptor;
+use std::old_io::{ TcpListener, TcpStream, Acceptor, Listener, BufferedStream };
 use std::sync::mpsc::channel;
 use std::sync::mpsc::{ Sender, Receiver };
 use std::collections::HashMap;
-use std::thread::{ Thread, JoinGuard };
+use std::thread::Thread;
 use std::str;
 use connection::Connection;
-
 
 enum Action {
     Add(SocketAddr, TcpStream),
@@ -19,11 +18,12 @@ enum Action {
 pub fn start() {
     let listener = TcpListener::bind("0.0.0.0:6262").unwrap();
     let acceptor = listener.listen().unwrap();
-    println!("Listening on 0.0.0.0:6262");
     let (sender, receiver) = channel();
 
     Thread::spawn(move || manage_connections(receiver));
-    Thread::scoped(move || accept_connections(acceptor, sender));
+    let _ = Thread::scoped(move || accept_connections(acceptor, sender));
+
+    println!("Listening on 0.0.0.0:6262");
 }
 
 fn accept_connections(mut acceptor: TcpAcceptor, sender: Sender<Action>) {

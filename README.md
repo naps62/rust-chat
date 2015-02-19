@@ -6,4 +6,16 @@ Mainly for the purpose of showing it during my talk @ [SEIUM](http://seium.org/)
 
 # Server
 
-Build it with
+Run it:
+
+```rust
+cargo run
+```
+
+# Client
+
+No client is made yet. You can connect via telnet though:
+
+```rust
+telnet localhost 6262
+```

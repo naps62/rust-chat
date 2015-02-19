@@ -1,3 +1,5 @@
+#![feature(io, std_misc)]
+
 mod format_strings;
 mod chat_server;
 mod connection;
